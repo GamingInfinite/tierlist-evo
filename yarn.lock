@@ -509,6 +509,11 @@ color-name@~1.1.4:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
+colord@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/colord/-/colord-2.9.3.tgz#4f8ce919de456f1d5c1c368c307fe20f3e59fb43"
+  integrity sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==
+
 commander@^4.0.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
@@ -1327,6 +1332,19 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+svelte-awesome-color-picker@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/svelte-awesome-color-picker/-/svelte-awesome-color-picker-3.0.5.tgz#611509250de86a0a5c9b7f19b0b26cbcf8a78cda"
+  integrity sha512-8btMs7m8nVkKrKXlqwGJGcial+3fgPi5f7H6m7Vpq+aPuSzT4gDcC8IcvGdR+GEaORgBCO+Q8t41FvpVBrSbLg==
+  dependencies:
+    colord "^2.9.3"
+    svelte-awesome-slider "^1.1.0"
+
+svelte-awesome-slider@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/svelte-awesome-slider/-/svelte-awesome-slider-1.1.0.tgz#34c46b1e04860f1a88dd12184f7d2c2dc4c9156d"
+  integrity sha512-MgY6ZdBON42HVZqNWNjq2HOgyDlC35q0TNbV/YO1l1/bcb5yhM8EE97h1AJ/7F6t6sLzXhQ3qPf5nGyCdDSnCg==
 
 svelte-hmr@^0.15.3:
   version "0.15.3"
