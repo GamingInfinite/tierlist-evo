@@ -73,7 +73,20 @@
     console.log(jsonobject);
   }
 
-  function download(content, fileName, contentType) {
+  function loadJson(json: { [key: number]: Tier; storage: string[] }) {
+    tiers = [];
+    for (let i = 0; i < Object.keys(json).length; i++) {
+      let key = Object.keys(json)[i];
+      if (key == "storage") {
+        imageBlobs = json.storage;
+      } else {
+        tiers.push(json[i]);
+      }
+    }
+    tiers = tiers;
+  }
+
+  function download(content: BlobPart, fileName: string, contentType: string) {
     const a = document.createElement("a");
     const file = new Blob([content], { type: contentType });
     a.href = URL.createObjectURL(file);
@@ -89,6 +102,11 @@
   let imageBlobs: string[] = [];
   let imageSelect: { id: number; src: string; tier?: number };
   let tierTiles: Map<string, Tile> = new Map<string, Tile>();
+
+  let imageInput: HTMLInputElement;
+  let jsonInput: HTMLInputElement;
+
+  let jsonUpload: FileList;
 </script>
 
 <svelte:window
@@ -106,9 +124,6 @@
 
 <div class="flex flex-row justify-center mt-4">
   <div class="flex flex-col items-center">
-    <div class="flex flex-row my-4">
-      <button class="btn btn-success" on:click={saveAsJson}>Save</button>
-    </div>
     {#each tiers as tier, i}
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
@@ -196,33 +211,66 @@
     </div>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="flex flex-row my-8 gap-4 items-center"
+      class="flex flex-row gap-4 items-center"
       on:mouseenter={() => {
         tierHover = -1;
       }}
     >
-      <div class="flex flex-col">
-        <input
-          type="file"
-          class="file-input file-input-bordered"
-          accept=".png,.jpg"
-          multiple
-          bind:files={imgUpload}
-          on:change={async () => {
-            for (let blob of imgUpload) {
-              let base64 = await blobToBase64(blob);
-              if (typeof base64 == "string") {
-                imageBlobs.push(base64);
-              }
-              imageBlobs = imageBlobs;
-            }
-          }}
-        />
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-row gap-4 justify-center">
+          <div class="flex flex-row gap-2">
+            <input
+              type="file"
+              class="hidden"
+              accept=".png,.jpg,.webp,.gif"
+              multiple
+              bind:this={imageInput}
+              bind:files={imgUpload}
+              on:change={async () => {
+                for (let blob of imgUpload) {
+                  let base64 = await blobToBase64(blob);
+                  if (typeof base64 == "string") {
+                    imageBlobs.push(base64);
+                  }
+                  imageBlobs = imageBlobs;
+                }
+              }}
+            />
+            <input
+              type="file"
+              class="hidden"
+              accept=".json"
+              bind:this={jsonInput}
+              bind:files={jsonUpload}
+              on:change={async () => {
+                let json = jsonUpload[0];
+                loadJson(JSON.parse(await json.text()));
+              }}
+            />
+            <button
+              class="btn btn-primary"
+              on:click={() => {
+                imageInput.click();
+              }}
+            >
+              Choose Images
+            </button>
+            <button class="btn btn-success" on:click={saveAsJson}>Save</button>
+            <button
+              class="btn btn-error"
+              on:click={() => {
+                jsonInput.click();
+              }}>Load</button
+            >
+          </div>
+        </div>
+
         <div class="grid grid-cols-8 gap-4" id="storageRow">
           {#each imageBlobs as img, i}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
               class:pointer-events-none={moving}
+              class="flex justify-center"
               on:mouseenter={() => {
                 imageSelect = { id: i, src: img };
               }}
